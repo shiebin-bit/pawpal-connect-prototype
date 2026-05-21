@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PawPal Connect V2</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --ink: #101b18;
+      --ink-2: #253530;
+      --muted: #6f7d78;
+      --soft: #fffaf0;
+      --card: #ffffff;
+      --line: #e5e0d2;
+      --teal: #00c896;
+      --teal-dark: #00745f;
+      --teal-soft: #dff8ef;
+      --coral: #ff5b4a;
+      --coral-soft: #ffe6df;
+      --amber: #ffc857;
+      --amber-soft: #fff4cb;
+      --sky: #48b8ff;
+      --sky-soft: #e3f5ff;
+      --violet: #7b61ff;
+      --violet-soft: #eeeaff;
+      --lime: #b7f34a;
+      --shadow: 0 22px 50px rgba(22, 32, 28, .15);
+      --mini-shadow: 0 12px 28px rgba(22, 32, 28, .10);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 4%, rgba(0,200,150,.26), transparent 25%),
+        radial-gradient(circle at 96% 10%, rgba(255,91,74,.24), transparent 24%),
+        radial-gradient(circle at 70% 55%, rgba(123,97,255,.14), transparent 28%),
+        linear-gradient(135deg, #e8fff6, #fff2e5 44%, #eef7ff);
+    }
+
+    .stage {
+      width: 1748px;
+      padding: 34px;
+    }
+
+    .cover {
+      width: 1668px;
+      min-height: 170px;
+      border-radius: 34px;
+      padding: 30px 34px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 520px;
+      gap: 28px;
+      margin-bottom: 34px;
+      backdrop-filter: blur(18px);
+    }
+
+    .cover h1 {
+      margin: 0 0 10px;
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .cover p {
+      max-width: 790px;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .flow-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-content: start;
+      justify-content: end;
+    }
+
+    .flow-chip {
+      padding: 10px 13px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--ink-2);
+    }
+
+    .flow-chip.hot { background: var(--coral-soft); color: #b93224; border-color: #ffc8bd; }
+    .flow-chip.good { background: var(--teal-soft); color: var(--teal-dark); border-color: #ace9d8; }
+    .flow-chip.warn { background: var(--amber-soft); color: #8a6411; border-color: #f4d77b; }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 390px);
+      gap: 34px;
+    }
+
+    .phone {
+      width: 390px;
+      height: 844px;
+      border-radius: 38px;
+      background: var(--soft);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(16,27,24,.08);
+      box-shadow: var(--shadow);
+    }
+
+    .phone:after {
+      content: "";
+      position: absolute;
+      left: 142px;
+      right: 142px;
+      bottom: 7px;
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(16,27,24,.22);
+      z-index: 30;
+    }
+
+    .phone.dark {
+      background: #101b18;
+      color: white;
+    }
+
+    .phone.dark:after { background: rgba(255,255,255,.58); }
+
+    .status {
+      height: 34px;
+      padding: 12px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 850;
+      position: relative;
+      z-index: 10;
+    }
+
+    .sys {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sys span {
+      width: 6px;
+      height: 6px;
+      border-radius: 99px;
+      background: currentColor;
+      opacity: .82;
+    }
+
+    .battery {
+      width: 21px;
+      height: 10px;
+      border: 1.6px solid currentColor;
+      border-radius: 4px;
+      position: relative;
+      margin-left: 3px;
+    }
+
+    .battery:after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 12px;
+      height: 4px;
+      border-radius: 3px;
+      background: currentColor;
+    }
+
+    .app {
+      height: calc(100% - 34px);
+      padding: 16px 18px 90px;
+      position: relative;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--teal), var(--sky));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(0,168,132,.34);
+      font-weight: 950;
+      position: relative;
+    }
+
+    .logo:before, .logo:after {
+      content: "";
+      position: absolute;
+      border-radius: 99px;
+      background: rgba(255,255,255,.9);
+    }
+    .logo:before { width: 13px; height: 13px; top: 11px; left: 12px; }
+    .logo:after { width: 18px; height: 13px; bottom: 10px; right: 9px; transform: rotate(-18deg); }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      border: 1px solid rgba(16,27,24,.08);
+      background: rgba(255,255,255,.86);
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      box-shadow: var(--mini-shadow);
+      color: var(--ink);
+    }
+
+    .svg-icon {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      display: block;
+    }
+
+    .icon .svg-icon { width: 20px; height: 20px; }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: 39px;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 25px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    h3 {
+      font-size: 15px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+    .dark p { color: rgba(255,255,255,.72); }
+
+    .hero {
+      margin: 18px -18px 0;
+      height: 355px;
+      position: relative;
+      overflow: hidden;
+      background: #cdeee4;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.02);
+    }
+    .hero:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(16,27,24,.88), rgba(16,27,24,.15) 54%, transparent);
+    }
+    .hero-copy {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 28px;
+      z-index: 2;
+      color: white;
+    }
+    .hero-copy p { color: rgba(255,255,255,.78); margin-top: 10px; font-size: 14px; }
+
+    .btn {
+      height: 54px;
+      border-radius: 18px;
+      background: var(--ink);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 15px;
+      box-shadow: 0 14px 26px rgba(16,27,24,.2);
+    }
+    .btn.teal { background: linear-gradient(135deg, var(--teal), #14d8bb 55%, var(--sky)); box-shadow: 0 15px 30px rgba(0,200,150,.36); }
+    .btn.coral { background: linear-gradient(135deg, var(--coral), #ff875c 58%, #ffb24a); box-shadow: 0 15px 30px rgba(255,91,74,.34); }
+    .btn.light { background: #fff; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+    .btn.small { height: 42px; border-radius: 15px; font-size: 13px; }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+    .actions {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 92px;
+      display: grid;
+      gap: 11px;
+    }
+
+    .input {
+      height: 50px;
+      border-radius: 17px;
+      background: #fff;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .input.big {
+      height: 114px;
+      align-items: flex-start;
+      padding-top: 15px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: var(--mini-shadow);
+      background: var(--teal-soft);
+    }
+
+    .hello {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .hello small {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .search {
+      height: 50px;
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13px 0 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--mini-shadow);
+    }
+    .search span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      overflow: hidden;
+      margin: 0 0 14px;
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      color: var(--ink-2);
+    }
+    .chip.active { background: var(--ink); color: white; border-color: var(--ink); }
+    .chip.teal { background: var(--teal-soft); color: var(--teal-dark); border-color: #b8eadc; }
+    .chip.coral { background: var(--coral-soft); color: #b73728; border-color: #ffc8bd; }
+    .chip.amber { background: var(--amber-soft); color: #8a6411; border-color: #f3da8b; }
+
+    .case-card {
+      border-radius: 26px;
+      background: #fff;
+      border: 1px solid rgba(16,27,24,.08);
+      box-shadow: var(--mini-shadow);
+      padding: 12px;
+      margin-bottom: 13px;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-card.featured { padding: 0; }
+    .case-photo {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .case-content { padding: 13px; }
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      margin: 8px 0 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 950;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+    }
+    .pill.hot { background: var(--coral-soft); color: #b73728; }
+    .pill.warn { background: var(--amber-soft); color: #8a6411; }
+    .pill.blue { background: var(--sky-soft); color: #186d99; }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: currentColor;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mini-metric {
+      padding: 10px 8px;
+      border-radius: 16px;
+      background: #f7f5ef;
+      text-align: center;
+    }
+    .mini-metric strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+    .mini-metric span {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .nav {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 17px;
+      height: 66px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(16,27,24,.08);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      box-shadow: 0 18px 36px rgba(16,27,24,.18);
+      backdrop-filter: blur(18px);
+      z-index: 26;
+    }
+    .nav-item {
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+    .nav-icon {
+      display: none;
+    }
+    .nav-svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .nav-item.active { color: var(--teal-dark); }
+    .nav-item.active .nav-svg {
+      stroke: var(--teal);
+      filter: drop-shadow(0 7px 12px rgba(0,200,150,.35));
+    }
+
+    .floating {
+      position: absolute;
+      right: 22px;
+      bottom: 92px;
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--coral), var(--violet));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      font-weight: 700;
+      box-shadow: 0 18px 36px rgba(255,107,87,.36);
+    }
+
+    .pager {
+      display: none;
+    }
+    .pager i {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: rgba(16,27,24,.18);
+    }
+    .pager i.active {
+      width: 22px;
+      background: var(--teal);
+    }
+    .dark .pager i { background: rgba(255,255,255,.28); }
+    .dark .pager i.active { background: #fff; }
+
+    .detail-hero {
+      height: 318px;
+      margin: -16px -18px 0;
+      position: relative;
+      overflow: hidden;
+      background: #ddd;
+    }
+    .detail-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.12);
+    }
+    .detail-hero:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(16,27,24,.55), transparent 55%);
+    }
+    .back {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      z-index: 3;
+      background: rgba(255,255,255,.88);
+    }
+    .hero-badges {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 20px;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
+    .hero-badges h2 { color: white; max-width: 245px; }
+    .sheet {
+      margin: -26px -18px 0;
+      min-height: 560px;
+      padding: 22px 18px 0;
+      background: var(--soft);
+      border-radius: 30px 30px 0 0;
+      position: relative;
+      z-index: 4;
+    }
+
+    .case-sheet {
+      padding-bottom: 160px;
+    }
+
+    .case-sheet .actions {
+      bottom: 132px;
+    }
+
+    .case-summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .case-summary h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .need-card {
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 14px;
+      box-shadow: var(--mini-shadow);
+      margin-top: 12px;
+    }
+
+    .need-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .need-item {
+      border-radius: 18px;
+      background: #fff7f4;
+      border: 1px solid #ffd0c7;
+      padding: 11px;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .need-item strong {
+      display: block;
+      font-size: 12px;
+      line-height: 1.15;
+    }
+
+    .need-item span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .progress-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 15px;
+      box-shadow: var(--mini-shadow);
+      margin: 14px 0;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .step {
+      height: 7px;
+      border-radius: 99px;
+      background: #e8e4d8;
+    }
+    .step.done { background: var(--teal); }
+    .step.now { background: var(--coral); }
+
+    .task-list { display: grid; gap: 10px; }
+    .task {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 11px;
+      box-shadow: var(--mini-shadow);
+    }
+    .task-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      background: var(--sky-soft);
+      color: #1875a4;
+      font-weight: 950;
+    }
+    .task-icon.coral { background: var(--coral-soft); color: #b73728; }
+    .task-icon.amber { background: var(--amber-soft); color: #8a6411; }
+    .task-icon .svg-icon {
+      width: 21px;
+      height: 21px;
+      stroke-width: 2.5;
+    }
+    .task h3 { margin-bottom: 4px; }
+
+    .message {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .bubble {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 12px;
+      box-shadow: var(--mini-shadow);
+    }
+    .bubble h3 { margin-bottom: 5px; }
+
+    .map {
+      height: 218px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(16,27,24,.08);
+      background:
+        linear-gradient(45deg, rgba(255,255,255,.46) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.40) 25%, transparent 25%),
+        linear-gradient(135deg, #c8eddb, #dbf2ff 48%, #fff0d0);
+      background-size: 44px 44px;
+      box-shadow: var(--mini-shadow);
+    }
+    .road {
+      position: absolute;
+      height: 18px;
+      width: 310px;
+      background: rgba(255,255,255,.78);
+      border-radius: 99px;
+      transform: rotate(-26deg);
+      left: 28px;
+      top: 97px;
+    }
+    .pin {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50% 50% 50% 7px;
+      background: var(--coral);
+      transform: rotate(-45deg);
+      border: 4px solid #fff;
+      box-shadow: 0 10px 20px rgba(16,27,24,.18);
+    }
+    .pin:after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .pin.a { left: 75px; top: 82px; }
+    .pin.b { right: 86px; top: 48px; background: var(--teal); }
+    .pin.c { right: 124px; bottom: 45px; background: var(--amber); }
+
+    .segmented {
+      height: 52px;
+      background: #fff;
+      border-radius: 19px;
+      border: 1px solid var(--line);
+      padding: 5px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 13px;
+    }
+    .segment {
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 950;
+      color: var(--muted);
+    }
+    .segment.active { background: var(--ink); color: #fff; }
+
+    .proof {
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fff, #fff7dc);
+      border: 1px solid #f1d684;
+      padding: 15px;
+      display: grid;
+      gap: 9px;
+      box-shadow: var(--mini-shadow);
+    }
+    .receipt {
+      height: 74px;
+      border-radius: 18px;
+      background:
+        repeating-linear-gradient(0deg, #fff, #fff 9px, #f7f0d2 10px),
+        #fff;
+      border: 1px dashed #d5b755;
+      padding: 12px;
+      font-size: 11px;
+      color: #8a6411;
+      font-weight: 900;
+    }
+
+    .profile-head {
+      background: linear-gradient(135deg, var(--teal), var(--sky) 58%, var(--violet));
+      border-radius: 30px;
+      padding: 20px;
+      color: white;
+      box-shadow: 0 20px 38px rgba(0,168,132,.28);
+      margin-bottom: 14px;
+    }
+    .profile-head p { color: rgba(255,255,255,.78); }
+    .badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .badge {
+      border-radius: 18px;
+      padding: 12px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.30);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .stat {
+      background: #fff;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      padding: 14px;
+      box-shadow: var(--mini-shadow);
+    }
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .donut {
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      background: conic-gradient(var(--teal) 0 44%, var(--coral) 44% 70%, var(--amber) 70% 88%, var(--sky) 88% 100%);
+      margin: 8px auto 10px;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+    }
+    .donut:after {
+      content: "RM2.4k";
+      position: absolute;
+      inset: 30px;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .safety-card {
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 15px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      box-shadow: var(--mini-shadow);
+      margin-bottom: 11px;
+    }
+    .shield {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .flow-card {
+      border-radius: 26px;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--mini-shadow);
+      margin-bottom: 12px;
+    }
+    .flow-card strong {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      display: inline-grid;
+      place-items: center;
+      background: var(--ink);
+      color: white;
+      margin-right: 9px;
+    }
+
+    .btn, .icon, .nav-item, .floating, .case-card, .task, .segment, .chip {
+      cursor: pointer;
+    }
+
+    .phone.is-focused {
+      outline: 5px solid rgba(0,200,150,.55);
+      outline-offset: 7px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(16,27,24,.92);
+      color: #fff;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 850;
+      z-index: 1000;
+      box-shadow: 0 16px 36px rgba(16,27,24,.24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+
+    .caption {
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      background: rgba(16,27,24,.75);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 5px 9px;
+      border-radius: 999px;
+      opacity: .95;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-6h5v6"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+    <symbol id="i-task" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="m3 6 1 1 2-2"/><path d="m3 12 1 1 2-2"/><path d="m3 18 1 1 2-2"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12"/><path d="M18 6 6 18"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M4 12h2"/><path d="M18 12h2"/><path d="m6.3 6.3 1.4 1.4"/><path d="m16.3 16.3 1.4 1.4"/><path d="m17.7 6.3-1.4 1.4"/><path d="m7.7 16.3-1.4 1.4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7h.01"/></symbol>
+  </svg>
+  <main class="stage">
+    <section class="cover">
+      <div>
+        <h1>PawPal Connect V2</h1>
+        <p>Modern high-fidelity mobile prototype for a campus and local pet rescue community. The flow emphasizes trust, collaboration, donation transparency, and a warmer user experience.</p>
+      </div>
+      <div class="flow-chips">
+        <span class="flow-chip good">Social feed</span>
+        <span class="flow-chip hot">Urgent rescue</span>
+        <span class="flow-chip warn">Donation proof</span>
+        <span class="flow-chip good">Volunteer tasks</span>
+        <span class="flow-chip">Badges</span>
+        <span class="flow-chip">Safety center</span>
+      </div>
+    </section>
+
+    <section class="board">
+      <article class="phone dark" data-screen="onboarding">
+        <div class="caption">01 Onboarding</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><div class="brand"><div class="logo"></div>PawPal</div><div class="icon"><svg class="svg-icon"><use href="#i-info"></use></svg></div></div>
+          <div class="hero">
+            <img src="assets/pet_5_1.png" alt="">
+            <div class="hero-copy">
+              <h1>Rescue together. Adopt with trust.</h1>
+              <p>Find nearby cases, coordinate help, and follow transparent rescue updates.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="btn teal">Start helping today</div>
+            <div class="btn light">Browse community cases</div>
+          </div>
+          <div class="pager"><i class="active"></i><i></i><i></i></div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="login">
+        <div class="caption">02 Login</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="brand"><div class="logo"></div>PawPal Connect</div>
+          <div style="height:42px"></div>
+          <h1>Welcome back, rescuer.</h1>
+          <p style="margin-top:12px">Sign in to manage adoption requests, volunteer tasks, and donation proof.</p>
+          <div style="height:30px"></div>
+          <div class="stack">
+            <div class="input">Email address</div>
+            <div class="input">Password</div>
+            <div class="row"><span class="chip teal">Remember me</span><p>Forgot password?</p></div>
+          </div>
+          <div class="actions">
+            <div class="btn teal">Log in</div>
+            <div class="btn light">Create account</div>
+          </div>
+          <div class="pager"><i></i><i class="active"></i><i></i></div>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="feed">
+        <div class="caption">03 Home Feed</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="hello">
+            <div><small>Nearby community</small><h2>Good morning, Alya</h2></div>
+            <img class="avatar" src="assets/user_1.png" alt="">
+          </div>
+          <div class="search"><span>Search rescue cases, tags, shelters</span><div class="icon" style="width:32px;height:32px;border-radius:12px"><svg class="svg-icon"><use href="#i-filter"></use></svg></div></div>
+          <div class="chips"><span class="chip active">All</span><span class="chip coral">Urgent</span><span class="chip teal">Verified</span><span class="chip">Adoption</span></div>
+          <div class="case-card featured">
+            <img class="case-photo" src="assets/pet_6_1.png" alt="">
+            <div class="case-content">
+              <div class="row"><span class="pill hot"><i class="dot"></i>Urgent rescue</span><span class="pill blue">1.2 km</span></div>
+              <div class="case-meta">Tan Shelter - 8 min ago - 12 comments</div>
+              <h3>Small dog found near campus rail</h3>
+              <p style="margin-top:6px">Needs transport, foster help, and medical support tonight.</p>
+              <div class="metric-row"><div class="mini-metric"><strong>3</strong><span>tasks</span></div><div class="mini-metric"><strong>RM90</strong><span>pledged</span></div><div class="mini-metric"><strong>82%</strong><span>trusted</span></div></div>
+            </div>
+          </div>
+          <div class="case-card"><div class="row"><h3>Kittens ready for screening</h3><span class="pill">Adoption</span></div><p style="margin-top:6px">Four healthy kittens. Owner wants verified adopters only.</p></div>
+          <div class="floating"><svg class="svg-icon"><use href="#i-plus"></use></svg></div>
+          <nav class="nav"><div class="nav-item active"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="map">
+        <div class="caption">04 Map Search</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Explore nearby</h2><div class="icon"><svg class="svg-icon"><use href="#i-filter"></use></svg></div></div>
+          <div class="search"><span>Cat, foster, medical, urgent</span><div class="icon" style="width:32px;height:32px;border-radius:12px"><svg class="svg-icon"><use href="#i-search"></use></svg></div></div>
+          <div class="chips"><span class="chip active">5 km</span><span class="chip teal">Verified</span><span class="chip coral">Open tasks</span></div>
+          <div class="map"><i class="road"></i><i class="pin a"></i><i class="pin b"></i><i class="pin c"></i></div>
+          <div style="height:15px"></div>
+          <div class="task"><div class="task-icon coral"><svg class="svg-icon"><use href="#i-bell"></use></svg></div><div><h3>Rabbit missing near hostel</h3><p>Last seen 20 minutes ago</p></div><span class="pill hot">Live</span></div>
+          <div class="task"><div class="task-icon"><svg class="svg-icon"><use href="#i-shield"></use></svg></div><div><h3>Food support requested</h3><p>Two bags needed before weekend</p></div><span class="pill">2.4 km</span></div>
+          <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="case-detail">
+        <div class="caption">05 Case Detail</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="detail-hero"><img src="assets/pet_6_1.png" alt=""><div class="icon back"><svg class="svg-icon"><use href="#i-back"></use></svg></div><div class="hero-badges"><h2>Snoky needs help tonight</h2><span class="pill hot">Critical</span></div></div>
+          <div class="sheet case-sheet">
+            <div class="case-summary">
+              <div>
+                <h3>Urgent rescue near campus rail</h3>
+                <p>Reported by Tan Shelter. Community verified 8 minutes ago.</p>
+              </div>
+              <span class="pill">Verified</span>
+            </div>
+            <div class="progress-card"><div class="row"><h3>Rescue progress</h3><p>Step 3 of 4</p></div><div class="steps"><i class="step done"></i><i class="step done"></i><i class="step now"></i><i class="step"></i></div></div>
+            <div class="metric-row"><div class="mini-metric"><strong>3</strong><span>open tasks</span></div><div class="mini-metric"><strong>RM90</strong><span>pledged</span></div><div class="mini-metric"><strong>12</strong><span>updates</span></div></div>
+            <div class="need-card">
+              <div class="row"><h3>Help needed now</h3><span class="pill hot">Tonight</span></div>
+              <div class="need-grid">
+                <div class="need-item"><div class="task-icon coral"><svg class="svg-icon"><use href="#i-map"></use></svg></div><div><strong>Transport</strong><span>Before 8 PM</span></div></div>
+                <div class="need-item"><div class="task-icon amber"><svg class="svg-icon"><use href="#i-home"></use></svg></div><div><strong>Foster</strong><span>One night</span></div></div>
+              </div>
+            </div>
+            <div class="actions"><div class="btn coral">Help this case</div></div>
+          </div>
+          <div class="pager"><i></i><i></i><i class="active"></i><i></i></div>
+                  <nav class="nav"><div class="nav-item active"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="comments">
+        <div class="caption">06 Comments</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Community updates</h2><div class="icon"><svg class="svg-icon"><use href="#i-plus"></use></svg></div></div>
+          <div class="message"><img class="avatar" src="assets/user_1.png"><div class="bubble"><h3>Tan Shelter</h3><p>I can bring a carrier. Need someone with a car by 7 PM.</p></div></div>
+          <div class="message"><div class="avatar"></div><div class="bubble"><h3>Mei Lin</h3><p>Verified location. Dog is scared but not aggressive.</p></div></div>
+          <div class="message"><div class="avatar"></div><div class="bubble"><h3>Campus Vet Club</h3><p>Please upload a clearer injury photo before moving him.</p></div></div>
+          <div class="case-card"><div class="row"><h3>Trust signal</h3><span class="pill">2 verifications</span></div><p style="margin-top:7px">Community verification makes urgent posts safer before donations or meetups.</p></div>
+          <div class="actions"><div class="input">Write an update...</div><div class="btn teal">Post update</div></div>
+          <div class="pager"><i></i><i></i><i></i><i class="active"></i></div>
+                  <nav class="nav"><div class="nav-item active"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="create">
+        <div class="caption">07 Create Case</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Create a case</h2><div class="icon"><svg class="svg-icon"><use href="#i-close"></use></svg></div></div>
+          <div class="segmented"><div class="segment active">Rescue</div><div class="segment">Adopt</div><div class="segment">Donate</div></div>
+          <div class="stack">
+            <div class="input">Pet name or temporary name</div>
+            <div class="row"><div class="input" style="width:172px">Pet type</div><div class="input" style="width:172px">Urgency</div></div>
+            <div class="input">Approximate location only</div>
+            <div class="input big">What happened and what help is needed?</div>
+            <div class="case-card"><div class="row"><h3>Add photos</h3><span class="pill blue">0/3</span></div><p style="margin-top:6px">Clear photos help volunteers verify and respond faster.</p></div>
+          </div>
+          <div class="actions"><div class="btn teal">Publish case</div></div>
+          <div class="pager"><i></i><i></i><i class="active"></i><i></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="adoption">
+        <div class="caption">08 Adoption</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Adoption match</h2><div class="icon"><svg class="svg-icon"><use href="#i-back"></use></svg></div></div>
+          <div class="case-card featured"><img class="case-photo" src="assets/pet_5_1.png" alt=""><div class="case-content"><div class="row"><h3>Kitties</h3><span class="pill">Screening</span></div><p style="margin-top:6px">Four healthy kittens. Owner prefers adopters with stable home plans.</p></div></div>
+          <div class="stats"><div class="stat"><strong>91%</strong><p>Profile match</p></div><div class="stat"><strong>2</strong><p>Owner questions</p></div></div>
+          <div class="stack"><div class="input">Home type</div><div class="input">Pet experience</div><div class="input big">Why are you a good fit?</div></div>
+          <div class="actions"><div class="btn teal">Submit application</div></div>
+          <div class="pager"><i></i><i></i><i></i><i></i><i class="active"></i></div>
+                  <nav class="nav"><div class="nav-item active"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="donation">
+        <div class="caption">09 Donation Proof</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Donation pledge</h2><div class="icon"><svg class="svg-icon"><use href="#i-back"></use></svg></div></div>
+          <div class="case-card"><div class="row"><h3>Medical support</h3><span class="pill hot">RM210 left</span></div><p style="margin-top:6px">Funds are released after receipt and community review.</p></div>
+          <div class="segmented"><div class="segment active">Money</div><div class="segment">Food</div><div class="segment">Medical</div></div>
+          <div class="stats"><div class="stat"><strong>RM20</strong><p>Quick pledge</p></div><div class="stat"><strong>RM50</strong><p>Most common</p></div></div>
+          <div class="proof"><div class="row"><h3>Proof required</h3><span class="pill warn">Transparent</span></div><div class="receipt">Upload receipt / transfer screenshot</div><p>Every donor can follow how the support is used.</p></div>
+          <div class="actions"><div class="btn coral">Confirm pledge</div></div>
+          <div class="pager"><i></i><i class="active"></i><i></i><i></i></div>
+                  <nav class="nav"><div class="nav-item active"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="tasks">
+        <div class="caption">10 Task Board</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Volunteer tasks</h2><div class="icon"><svg class="svg-icon"><use href="#i-filter"></use></svg></div></div>
+          <div class="chips"><span class="chip active">Open</span><span class="chip teal">Nearby</span><span class="chip">My tasks</span></div>
+          <div class="task-list">
+            <div class="task"><div class="task-icon coral"><svg class="svg-icon"><use href="#i-map"></use></svg></div><div><h3>Transport to vet</h3><p>1.2 km - before 8 PM</p></div><span class="pill hot">Open</span></div>
+            <div class="task"><div class="task-icon amber"><svg class="svg-icon"><use href="#i-home"></use></svg></div><div><h3>Temporary foster</h3><p>One night, quiet space</p></div><span class="pill hot">Open</span></div>
+            <div class="task"><div class="task-icon"><svg class="svg-icon"><use href="#i-shield"></use></svg></div><div><h3>Verify receipt</h3><p>Check medical proof</p></div><span class="pill">Claimed</span></div>
+            <div class="task"><div class="task-icon"><svg class="svg-icon"><use href="#i-plus"></use></svg></div><div><h3>Post status photo</h3><p>After vet visit</p></div><span class="pill">Done</span></div>
+          </div>
+          <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="claim-task">
+        <div class="caption">11 Claim Task</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Claim transport</h2><div class="icon"><svg class="svg-icon"><use href="#i-back"></use></svg></div></div>
+          <div class="map"><i class="road"></i><i class="pin a"></i><i class="pin b"></i></div>
+          <div style="height:14px"></div>
+          <div class="case-card"><div class="row"><h3>Pickup to VetCare</h3><span class="pill hot">Tonight</span></div><p style="margin-top:7px">Exact pickup point is shared only after the case owner confirms.</p></div>
+          <div class="stack"><div class="input">Available 6:30 PM - 8:00 PM</div><div class="input">I have transport and a carrier</div><div class="input big">Message to case owner</div></div>
+          <div class="actions"><div class="btn coral">Claim task safely</div></div>
+          <div class="pager"><i></i><i></i><i></i><i class="active"></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="notifications">
+        <div class="caption">12 Notifications</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Updates</h2><div class="icon"><svg class="svg-icon"><use href="#i-settings"></use></svg></div></div>
+          <div class="task-list">
+            <div class="task"><div class="task-icon coral"><svg class="svg-icon"><use href="#i-map"></use></svg></div><div><h3>Transport claimed</h3><p>Alya is waiting for pickup confirmation.</p></div><span class="pill">2m</span></div>
+            <div class="task"><div class="task-icon amber"><svg class="svg-icon"><use href="#i-shield"></use></svg></div><div><h3>Receipt uploaded</h3><p>Medical proof is ready for review.</p></div><span class="pill">18m</span></div>
+            <div class="task"><div class="task-icon"><svg class="svg-icon"><use href="#i-user"></use></svg></div><div><h3>Adoption review</h3><p>Your Kitties application is under review.</p></div><span class="pill">1h</span></div>
+            <div class="task"><div class="task-icon"><svg class="svg-icon"><use href="#i-bell"></use></svg></div><div><h3>Case verified</h3><p>Two trusted users confirmed location.</p></div><span class="pill">3h</span></div>
+          </div>
+          <div class="pager"><i></i><i></i><i></i><i></i><i class="active"></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="profile">
+        <div class="caption">13 Profile</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Profile</h2><div class="icon"><svg class="svg-icon"><use href="#i-settings"></use></svg></div></div>
+          <div class="profile-head">
+            <div class="row"><div><h2>Alya Rahman</h2><p>Campus volunteer - verified donor</p></div><img class="avatar" src="assets/user_1.png" alt=""></div>
+            <div class="badge-grid"><div class="badge">Verified rescuer</div><div class="badge">Trusted donor</div><div class="badge">Fast responder</div><div class="badge">Safe meetup</div></div>
+          </div>
+          <div class="stats"><div class="stat"><strong>18</strong><p>Cases helped</p></div><div class="stat"><strong>4.8</strong><p>Community rating</p></div></div>
+          <div class="case-card"><div class="row"><h3>Privacy mode</h3><span class="pill">On</span></div><p style="margin-top:7px">Phone and exact address stay hidden until a task is confirmed.</p></div>
+          <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+        </div>
+      </article>
+
+      <article class="phone" data-screen="dashboard">
+        <div class="caption">14 Dashboard</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Community impact</h2><div class="icon"><svg class="svg-icon"><use href="#i-task"></use></svg></div></div>
+          <div class="stats"><div class="stat"><strong>42</strong><p>Pets posted</p></div><div class="stat"><strong>16</strong><p>Adopted</p></div><div class="stat"><strong>89</strong><p>Tasks completed</p></div><div class="stat"><strong>73%</strong><p>Verified cases</p></div></div>
+          <div class="case-card"><div class="row"><h3>Donation transparency</h3><span class="pill warn">Monthly</span></div><div class="donut"></div><p>Money, medical, food, and transport support tracked publicly.</p></div>
+          <div class="case-card"><h3>Top social tags</h3><p style="margin-top:7px">urgent, foster needed, verified, medical, campus area</p></div>
+          <div class="pager"><i></i><i></i><i class="active"></i><i></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="safety">
+        <div class="caption">15 Safety</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Safety center</h2><div class="icon"><svg class="svg-icon"><use href="#i-back"></use></svg></div></div>
+          <div class="safety-card"><div class="shield">1</div><div><h3>Location protection</h3><p>Public posts show approximate area only.</p></div></div>
+          <div class="safety-card"><div class="shield">2</div><div><h3>Donation credibility</h3><p>Receipts and closure updates are required for medical cases.</p></div></div>
+          <div class="safety-card"><div class="shield">3</div><div><h3>Report suspicious activity</h3><p>Flag fake photos, harassment, or unsafe meetup behavior.</p></div></div>
+          <div class="safety-card"><div class="shield">4</div><div><h3>Community moderation</h3><p>Trusted volunteers review high-risk rescue posts.</p></div></div>
+          <div class="actions"><div class="btn teal">Submit report</div></div>
+          <div class="pager"><i></i><i class="active"></i><i></i><i></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+
+      <article class="phone" data-screen="flow-summary">
+        <div class="caption">16 Flow Summary</div>
+        <div class="status"><span>9:41</span><div class="sys"><span></span><span></span><span></span><i class="battery"></i></div></div>
+        <div class="app">
+          <div class="top"><h2>Presentation flow</h2><div class="icon"><svg class="svg-icon"><use href="#i-info"></use></svg></div></div>
+          <div class="flow-card"><h3><strong>1</strong>Discover</h3><p style="margin-top:8px">User finds an urgent nearby rescue case from feed or map.</p></div>
+          <div class="flow-card"><h3><strong>2</strong>Verify</h3><p style="margin-top:8px">Comments, trusted badges, and updates build credibility.</p></div>
+          <div class="flow-card"><h3><strong>3</strong>Collaborate</h3><p style="margin-top:8px">Volunteers claim tasks while donors pledge support.</p></div>
+          <div class="flow-card"><h3><strong>4</strong>Track impact</h3><p style="margin-top:8px">Dashboard shows rescue progress, donations, adoption, and social activity.</p></div>
+          <div class="case-card"><span class="pill teal">Rubric fit</span><p style="margin-top:8px">Profile, posting, commenting, tags, notifications, dashboard, reputation, and collaborative task management.</p></div>
+          <div class="pager"><i></i><i></i><i></i><i class="active"></i></div>
+                  <nav class="nav"><div class="nav-item"><svg class="nav-svg"><use href="#i-home"></use></svg>Feed</div><div class="nav-item"><svg class="nav-svg"><use href="#i-map"></use></svg>Map</div><div class="nav-item"><svg class="nav-svg"><use href="#i-plus"></use></svg>Post</div><div class="nav-item"><svg class="nav-svg"><use href="#i-task"></use></svg>Tasks</div><div class="nav-item active"><svg class="nav-svg"><use href="#i-user"></use></svg>Me</div></nav>
+</div>
+      </article>
+    </section>
+  </main>
+  <div class="toast" id="toast">Moved to screen</div>
+  <script>
+    const historyStack = [];
+    const screenByName = new Map([...document.querySelectorAll(".phone[data-screen]")]
+      .map((node) => [node.dataset.screen, node]));
+    let currentScreen = "onboarding";
+
+    function focusScreen(name, pushHistory = true) {
+      const target = screenByName.get(name);
+      if (!target) return;
+      if (pushHistory && currentScreen !== name) historyStack.push(currentScreen);
+      currentScreen = name;
+      document.querySelectorAll(".phone.is-focused").forEach((node) => node.classList.remove("is-focused"));
+      target.classList.add("is-focused");
+      target.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+      const toast = document.getElementById("toast");
+      toast.textContent = target.querySelector(".caption")?.textContent || "Moved to screen";
+      toast.classList.add("show");
+      window.clearTimeout(window.__pawpalToast);
+      window.__pawpalToast = window.setTimeout(() => toast.classList.remove("show"), 950);
+    }
+
+    function goBack() {
+      const last = historyStack.pop();
+      focusScreen(last || "feed", false);
+    }
+
+    function textOf(node) {
+      return (node.textContent || "").trim().toLowerCase();
+    }
+
+    document.addEventListener("click", (event) => {
+      const backIcon = event.target.closest(".back");
+      if (backIcon) return goBack();
+
+      const icon = event.target.closest(".top .icon");
+      if (icon) {
+        const phoneText = textOf(icon.closest(".phone"));
+        if (phoneText.includes("safety center")) return goBack();
+        if (phoneText.includes("adoption match")) return goBack();
+        if (phoneText.includes("donation pledge")) return goBack();
+        if (phoneText.includes("claim transport")) return goBack();
+        if (phoneText.includes("community updates")) return focusScreen("create");
+        if (phoneText.includes("updates")) return focusScreen("safety");
+        if (phoneText.includes("profile")) return focusScreen("dashboard");
+        if (phoneText.includes("community impact")) return focusScreen("flow-summary");
+        if (phoneText.includes("presentation flow")) return focusScreen("feed");
+      }
+
+      const nav = event.target.closest(".nav-item");
+      if (nav) {
+        const label = textOf(nav);
+        if (label.includes("feed")) return focusScreen("feed");
+        if (label.includes("map")) return focusScreen("map");
+        if (label.includes("post")) return focusScreen("create");
+        if (label.includes("tasks")) return focusScreen("tasks");
+        if (label.includes("me")) return focusScreen("profile");
+      }
+
+      if (event.target.closest(".floating")) return focusScreen("create");
+
+      const btn = event.target.closest(".btn");
+      if (btn) {
+        const label = textOf(btn);
+        if (label.includes("start") || label.includes("log in") || label.includes("browse")) return focusScreen("feed");
+        if (label.includes("create account")) return focusScreen("login");
+        if (label.includes("help this case")) return focusScreen("tasks");
+        if (label.includes("post update")) return focusScreen("case-detail");
+        if (label.includes("publish")) return focusScreen("feed");
+        if (label.includes("submit application")) return focusScreen("notifications");
+        if (label.includes("confirm pledge")) return focusScreen("notifications");
+        if (label.includes("claim task")) return focusScreen("notifications");
+        if (label.includes("submit report")) return focusScreen("notifications");
+      }
+
+      const card = event.target.closest(".case-card, .task, .need-item");
+      if (card) {
+        const label = textOf(card);
+        const screen = card.closest(".phone")?.dataset.screen || "";
+        if (label.includes("transport") && (screen === "tasks" || screen === "case-detail")) return focusScreen("claim-task");
+        if (label.includes("foster") && (screen === "tasks" || screen === "case-detail")) return focusScreen("claim-task");
+        if (label.includes("small dog") || label.includes("snoky")) return focusScreen("case-detail");
+        if (label.includes("kitties")) return focusScreen("adoption");
+        if (label.includes("medical support") || label.includes("donation")) return focusScreen("donation");
+        if (label.includes("transport claimed") || label.includes("receipt uploaded") || label.includes("case verified")) return focusScreen("notifications");
+        if (label.includes("trust signal")) return focusScreen("comments");
+        if (label.includes("privacy mode")) return focusScreen("safety");
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" || event.key === "Backspace") goBack();
+    });
+  </script>
+</body>
+</html>
