@@ -7,24 +7,30 @@ Interactive HTML prototype for a Pet Adoption and Donation social computing app.
 - `index.html` - interactive phone demo, suitable for GitHub Pages.
 - `board.html` - overview board with all designed screens for report screenshots.
 
-## Direct demo routes
+## Direct links
 
 The prototype supports direct links:
 
 - `index.html#onboarding`
 - `index.html#feed`
-- `index.html#case`
+- `index.html#explore`
+- `index.html#create`
+- `index.html#case/case-snoky`
 - `index.html#tasks`
-- `index.html#donation`
-- `index.html#adoption`
+- `index.html#task/task-transport`
+- `index.html#donation/case-snoky`
+- `index.html#pet/pet-kitties`
 - `index.html#notifications`
+- `index.html#profile`
 - `index.html#dashboard`
-- `index.html#safety`
-- `index.html#flow`
+- `index.html#settings`
 
-## Suggested presentation flow
+## Main interactions
 
-Start helping today -> Feed -> Rescue case -> Help this case -> Claim task safely -> Updates -> Dashboard -> Safety center.
+- Browse and filter rescue cases.
+- Open case details, post comments, claim volunteer tasks, and pledge donations.
+- Explore adoptable pets and submit an adoption application.
+- Review notifications, profile badges, privacy controls, and community impact metrics.
 
 ## GitHub Pages
 
