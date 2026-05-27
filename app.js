@@ -568,7 +568,11 @@ function renderPetDetail() {
 
 function renderNotifications() {
   return `
-    ${renderTop("Updates", `<button class="btn small light" data-action="mark-read">Mark read</button>`)}
+    <div class="top">
+      <button class="icon-btn" data-back aria-label="Back">${icon("back")}</button>
+      <div style="flex:1"><h2>Updates</h2></div>
+      <button class="btn small light" data-action="mark-read">Mark read</button>
+    </div>
     <div class="stack">
       ${state.notifications.length ? state.notifications.map((item) => `
         <article class="task" data-notification="${item.id}">
@@ -641,6 +645,7 @@ function renderSettings() {
       <div class="card"><div class="row"><h3>Privacy mode</h3><span class="pill">On</span></div><p style="margin-top:7px">Approximate location is shown publicly. Exact pickup point stays private until confirmation.</p></div>
       <div class="card"><div class="row"><h3>Donation proof</h3><span class="pill warn">Required</span></div><p style="margin-top:7px">Medical and donation cases require receipt or closure proof before marked complete.</p></div>
       <button class="btn full light" data-action="reset-demo">Reset demo data</button>
+      <button class="btn full coral" data-action="logout">Log out</button>
     </div>
   `;
 }
@@ -848,6 +853,10 @@ document.addEventListener("click", (event) => {
     ui = { query: "", feedFilter: "all", taskFilter: "open", createMode: "rescue", exploreFilter: "all" };
     showModal("Demo reset", "All simulated actions were cleared.", "Back to feed", { name: "feed" });
     render();
+  }
+  if (action === "logout") {
+    routeHistory = [];
+    showModal("Logged out", "You can sign in again to continue helping nearby rescue cases.", "Back to login", { name: "login" });
   }
 });
 
